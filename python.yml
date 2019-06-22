@@ -34,6 +34,8 @@
   become: true
   tasks:
   - pip:
-      name: watermark
-  - pip:
-      name: jupyterlab
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - watermark
+      - jupyterlab
