@@ -1,0 +1,39 @@
+---
+- name: Installing Python
+  hosts: all
+  become: true
+  tasks:
+  - name: Base packages
+    apt:
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+      - build-essential
+      - libffi-dev
+      - libssl-dev
+      - python3-dev
+  - name: Python packages
+    apt:
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+      - cookiecutter
+      - ipython3
+      - python3-cookiecutter
+      - python3-jsonschema
+      - python3-jupyter-console
+      - python3-notebook
+      - python3-pip
+      - python3-requests
+      - python3-venv
+
+- name: Installing PIP packages
+  hosts: all
+  become: true
+  tasks:
+  - pip:
+      name: watermark
+  - pip:
+      name: jupyterlab
