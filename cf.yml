@@ -1,0 +1,27 @@
+---
+- name: Installing Cloud Foundry
+  hosts: localhost
+  become: true
+  tasks:
+  - name: Add Could Foundry signing key
+    apt_key:
+      url: https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key
+      state: present
+  - name: Add Cloud Foundry repository
+    apt_repository:
+      repo: deb https://packages.cloudfoundry.org/debian stable main
+      filename: cloudfoundry-cli
+      state: present
+  - name: Update repositories cache and install "cf-cli" package
+    apt:
+      name: cf-cli
+      update_cache: yes
+
+- name: Configuring Cloud Foundry
+  hosts: localhost
+  become: false
+  tasks:
+  - name: Setting locale
+    shell: cf config --locale fr-FR
+    args:
+      executable: /bin/bash

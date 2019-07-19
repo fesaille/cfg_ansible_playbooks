@@ -1,5 +1,5 @@
 ---
-- name: Installing Python
+- name: Installing Node
   hosts: all
   become: true
   tasks:
@@ -9,10 +9,10 @@
       state: present
     vars:
       packages:
-      - build-essential
-      - libffi-dev
-      - libssl-dev
-      - python3-dev
+      - node
+      - npm
+      - node-express
+      - node-grunt-cli
   - name: Python packages
     apt:
       name: "{{ packages }}"
@@ -20,14 +20,13 @@
     vars:
       packages:
       - cookiecutter
-      - howdoi
       - ipython3
       - python3-cookiecutter
       - python3-jsonschema
       - python3-jupyter-console
-      - python3-lxml
       - python3-notebook
       - python3-pip
+      - python3-bottle
       - python3-requests
       - python3-venv
 

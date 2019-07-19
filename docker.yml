@@ -1,0 +1,67 @@
+
+# Role must be adapted on Ubuntu >= 19.04, following lines 
+# in tasks/main.yml must be commented/deleted
+# 
+# # TODO: Remove this shim once 18.09.1 or later is released.
+# - import_tasks: docker-1809-shim.yml
+#   when: ansible_service_mgr == 'systemd'
+
+# - hosts: localhost
+#   tasks:
+#   - name: Install that
+#     become: true
+#     get_url: 
+#       # https://docs.ansible.com/ansible/latest/modules/get_url_module.html
+#       url: https://raw.githubusercontent.com/geerlingguy/ansible-role-docker/master/tasks/docker-compose.yml
+#       dest: /tmp/aze
+#       mode: 0755
+
+#   - name: Copy file with owner and permissions
+#     become: true
+#     copy:
+#       src: /tmp/aze
+#       dest: /usr/local/bin/aze
+#       owner: root
+#       group: root
+#       mode: '0755'
+
+- hosts: localhost
+  become: true
+
+  vars:
+    # 07/2019 - docker_apt_repository for disco: 
+    # "deb [arch=amd64] https://download.docker.com/linux/ubuntu disco test edge stable"
+    docker_apt_release_channel: "test edge stable"
+    docker_compose_version: "1.24.1"
+    # A list of users who will be added to the docker group.
+    docker_users: [manu]
+
+
+  tasks:
+     # Add --tags "debug_info" to run
+    - name: Print ansible and docker debug information
+      vars: 
+        msg: |
+            Current user: {{ lookup('env','USER') }}
+            Ansible distribution: {{ ansible_distribution|lower }}
+            Ansible distribution release: {{ ansible_distribution_release }}
+            Ansible distribution version: {{ ansible_distribution_version }}
+            Docker apt release channel: {{ docker_apt_release_channel }}
+            Docker architecture: {{ docker_apt_arch }}
+            Docker apt repository: {{ docker_apt_repository }}
+            Ansible service mananger: {{ ansible_service_mgr }}
+      debug: 
+        msg: "{{ msg.split('\n') }}"       
+      tags: debug_info
+
+  roles:
+    - role: geerlingguy.docker
+
+
+  # TODO: add Iptables rules if arno's IP table firewall
+  # http://blog.vmichalak.com/2017/docker-iptables/
+  # 
+  # iptables -A FORWARD -i docker0 -o eth0 -j ACCEPT
+  # iptables -A FORWARD -i eth0 -o docker0 -j ACCEPT
+  #
+
