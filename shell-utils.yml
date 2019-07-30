@@ -1,0 +1,17 @@
+---
+- name: Installing shell utilities
+  hosts: all
+  tasks:
+  - name: Download cht.sh
+    get_url:
+      url: https://cht.sh/:cht.sh
+      dest: /tmp/cht.sh
+      force: yes
+  - name: Copy cht.sh to /usr/local/bin
+    become: true
+    copy:
+      src: /tmp/cht.sh
+      dest: /usr/local/bin/cht.sh
+      owner: root
+      group: root
+      mode: '0755'

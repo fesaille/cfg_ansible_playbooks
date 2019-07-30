@@ -1,0 +1,42 @@
+---
+- name: Installing Zsh and git
+  hosts: all
+  become: true  
+  tasks:
+  - name: Add zsh and git
+    apt:
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+      - zsh
+      - git
+
+- name: Installing oh-my-zsh and theme
+  hosts: all
+  become_user: manu
+  tasks:
+  - git:
+      repo: 'https://github.com/robbyrussell/oh-my-zsh'
+      dest: '{{ ansible_env.HOME }}/.oh-my-zsh'
+      clone: yes
+      update: yes
+
+  - git:
+      repo: 'https://github.com/bhilburn/powerlevel9k.git'
+      dest: '{{ ansible_env.HOME }}/.local/share/powerlevel9k'
+      clone: yes
+      update: yes
+
+  - name: Create $HOME/.local/.share/omz
+    file:
+      path: '{{ ansible_env.HOME }}/.local/share/omz/themes'
+      state: directory
+      mode: '0755'
+
+  # This one imply $ZSH_CUSTOM=~/.local/share/omz
+  - name: Link powerlevel9k theme to zsh theme directory
+    file:
+      src: '{{ ansible_env.HOME }}/.local/share/powerlevel9k/powerlevel9k.zsh-theme'
+      dest: '{{ ansible_env.HOME }}/.local/share/omz/themes/powerlevel9k.zsh-theme'
+      state: link
