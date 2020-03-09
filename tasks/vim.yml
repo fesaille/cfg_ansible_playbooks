@@ -1,0 +1,11 @@
+---
+- name: Clone git vim-airline
+  git:
+    repo: https://github.com/vim-airline/vim-airline
+    dest: /usr/local/share/vim/airline
+    clone: y
+    update: y
+
+- name: insall pynvim
+  pip:
+    name: pynvim

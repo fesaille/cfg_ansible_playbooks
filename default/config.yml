@@ -1,0 +1,112 @@
+---
+pkg:
+  base:
+    present:
+      - apt-transport-https
+      - aptitude
+      - cifs-utils
+      - cmake
+      - cowsay
+      - curl
+      - git
+      - imagemagick
+      - jq
+      - net-tools
+      - tree
+      - vim
+      - yamllint
+    absent:
+      - cups
+      - kdegames-card-data-kf5
+      - kdegames-mahjongg-data-kf5
+      - ktorrent
+      - konversation
+      - ksudoku
+      - kmines
+      - libreoffice-draw
+      - libreoffice-math
+      - libreoffice-impress
+      - k3b
+      - krdc
+      - plasma-discover
+      - kate
+      - akregator
+  multimedia:
+    present:
+      - audacity
+      - calibre
+      - cantata
+      - ffmpeg
+      - kid3
+      - picard
+      - digikam
+      - pdftk
+  python:
+    present:
+      - build-essential
+      - libffi-dev
+      - libssl-dev
+      - python3.7-dev
+      - python3.7
+      - python3.8-dev
+      - python3.8
+      - python3.8-venv
+      - cookiecutter
+      - howdoi
+      - ipython3
+      - pipenv
+      - python3-cookiecutter
+      - python3-jsonschema
+      - python3-jupyter-console
+      - python3-lxml
+      - python3-notebook
+      - python3-pip
+      - python3-requests
+      - python3-venv
+
+locales:
+  - de_DE.utf8
+  - en_US.utf8
+  - fr_FR.utf8
+
+# Default nodejs version
+nodejs_version: "12.x"
+nodejs_npm_global_packages:
+  - name: express
+  - name: grunt-cli
+
+vscode:
+  extensions:
+    - alefragnani.project-manager
+    - auchenberg.vscode-open-file-folder
+    - bierner.markdown-preview-github-styles
+    - ckolkman.vscode-postgres
+    - davidanson.vscode-markdownlint
+    - dbaeumer.vscode-eslint
+    - dsznajder.es7-react-js-snippets
+    - eamodio.gitlens
+    - james-yu.latex-workshop
+    - kenhowardpdx.vscode-gist
+    - ms-azuretools.vscode-docker
+    - ms-kubernetes-tools.vscode-kubernetes-tools
+    - ms-python.python
+    - ms-vscode.cpptools
+    - ms-vscode.go
+    - ms-vscode-remote.remote-containers
+    - ms-vscode-remote.remote-ssh
+    - ms-vscode-remote.remote-ssh-edit
+    - redhat.vscode-yaml
+    - richie5um2.vscode-sort-json
+    - shan.code-settings-sync
+    - stkb.rewrap
+    - uloco.theme-bluloco-light
+    - visualstudioexptteam.vscodeintellicode
+    - vscode-icons-team.vscode-icons
+    - vscodevim.vim
+    - vscoss.vscode-ansible
+
+# Docker specific variables
+docker_apt_repository: "deb [arch={{ docker_apt_arch }}] https://download.docker.com/linux/{{ ansible_distribution|lower }} disco {{ docker_apt_release_channel }}"
+docker_users: [manu]
+
+...

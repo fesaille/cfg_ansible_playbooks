@@ -1,0 +1,6 @@
+---
+- name: Ensure WORKON_HOME directory exists.
+  file:
+    path: "{{ workon_home }}"
+    state: directory
+  become: yes

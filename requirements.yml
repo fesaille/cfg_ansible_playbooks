@@ -1,2 +1,4 @@
 # Docker from galaxy
-- src: geerlingguy.docker
+- name: geerlingguy.docker
+- name: gantsign.visual-studio-code
+- name: geerlingguy.nodejs

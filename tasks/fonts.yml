@@ -1,0 +1,40 @@
+---
+- name: Download Meslo font
+  get_url:
+    url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Meslo.zip
+    dest: /tmp/Meslo.zip
+
+- name: Create nerds font dir
+  file:
+    path: '/usr/local/share/fonts/{{ item }}'
+    state: directory
+    mode: '0755'
+  loop:
+    - 'nerd/Meslo'
+    - 'firacode'
+  tags:
+    - fonts
+
+- name: Extract Meslo font
+  unarchive:
+    src: /tmp/Meslo.zip
+    dest: /usr/local/share/fonts/nerd/Meslo
+
+# https://github.com/tonsky/FiraCode/wiki/Linux-instructions#manual-installation
+- name: Download FiraCode font
+  get_url:
+    url: "https://github.com/tonsky/FiraCode/blob/master/distr/ttf/FiraCode-{{ item }}.ttf?raw=true"
+    dest: /usr/local/share/fonts/firacode
+  loop:
+     - Bold
+     - Light
+     - Medium
+     - Regular
+     - Retina
+  tags:
+    - fonts
+- name: 'Fonts | Debian | Update APT cache.'
+  become: yes
+  apt:
+    update_cache: yes
+

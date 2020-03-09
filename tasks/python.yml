@@ -1,0 +1,18 @@
+---
+- name: Python packages
+  apt:
+    name: "{{ pkg.python.present}}"
+    state: present
+  tags:
+    - python
+
+- name: Installing PIP packages
+  pip:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - watermark
+    - jupyterlab
+  tags:
+    - python
+...

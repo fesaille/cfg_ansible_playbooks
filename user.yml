@@ -1,0 +1,8 @@
+
+- name: Set up users
+  hosts: localhost
+  tasks: 
+  - name: Set shell
+    user:
+      name: manu
+      shell: /bin/zsh

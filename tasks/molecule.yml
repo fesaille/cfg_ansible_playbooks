@@ -1,0 +1,40 @@
+---
+- name: Molecule in venv
+  pip: &molecule_pkgs
+    name:
+      - molecule
+      - ansible-lint
+      - 'molecule[docker]'
+    virtualenv: /opt/venvs/molecule
+    state: present
+  register: virtualenv_presence
+#  ignore_errors: True
+  tags:
+    - ansible
+
+- name: Install virtualenv if failed
+  apt:
+    name: virtualenv
+    state: present
+  when: virtualenv_presence is failed
+  tags:
+    - ansible
+
+- name: Molecule in venv
+  pip:
+    <<: *molecule_pkgs
+  when: virtualenv_presence is failed
+  tags:
+    - ansible
+
+- name: Create link to molecule
+  file:
+    src: /opt/venvs/molecule/bin/molecule
+    dest: /usr/bin/molecule 
+    owner: root
+    group: root
+    state: link
+  tags:
+    - ansible
+
+...

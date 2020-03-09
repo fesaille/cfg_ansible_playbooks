@@ -1,0 +1,64 @@
+- name: Make python 2.7 alternatives
+  alternatives:
+    name: python
+    link: /usr/bin/python
+    path: /usr/bin/python2.7
+    priority: 27
+  tags:
+    - python
+
+- name: Make python 2 alternatives
+  alternatives:
+    name: python
+    link: /usr/bin/python2
+    path: /usr/bin/python2.7
+    priority: 27
+  tags:
+    - python
+
+- name: Make python 3.7 alternatives
+  alternatives:
+    name: python
+    link: /usr/bin/python
+    path: /usr/bin/python3.7
+    priority: 37
+  tags:
+    - python
+
+- name: Make python 3.8 alternatives
+  alternatives:
+    name: python
+    link: /usr/bin/python
+    path: /usr/bin/python3.8
+    priority: 38
+  tags:
+    - python
+
+- name: Make python 3 alternatives
+  alternatives:
+    name: python
+    link: /usr/bin/python
+    path: /usr/bin/python3
+    priority: 100
+  tags:
+    - python
+
+# alternatives for python3
+- name: Make python 3 alternatives
+  alternatives:
+    name: python3
+    link: /usr/bin/python3
+    path: /usr/bin/python3.7
+    priority: 37
+  tags:
+    - python
+
+- name: Make python 3 alternatives
+  alternatives:
+    name: python3
+    link: /usr/bin/python3
+    path: /usr/bin/python3.8
+    priority: 3
+  tags:
+    - python
+

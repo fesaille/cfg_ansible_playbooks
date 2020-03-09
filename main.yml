@@ -1,0 +1,86 @@
+---
+- name: Installing base system
+  hosts: all
+  become: true
+
+  vars_files:
+    - default/config.yml
+
+  tasks:
+  - name: Install base packages
+    apt:
+      name: "{{ pkg.base.present }}"
+      state: present
+    tags:
+      - base
+
+  - name: Remove ununsed packages
+    apt:
+      name: "{{ pkg.base.absent }}"
+      state: absent
+      autoremove: yes
+      autoclean: yes
+    tags:
+      - base
+
+#  - name: Ensure locale exist
+#    locale_gen:
+#      name: "{{ item }}"
+#      state: present
+#    loop: "{{ locales }}"
+#    tags:
+#      - base
+#
+  - name: Install multimedia packages
+    apt:
+      name: "{{ pkg.multimedia.present }}"
+      state: present
+      autoremove: yes
+      autoclean: yes
+    tags:
+      - multimedia
+
+  - name: Install skype for Linux
+    apt:
+      deb: https://repo.skype.com/latest/skypeforlinux-64.deb
+      state: present
+    tags:
+      - multimedia
+
+  - include_tasks: tasks/fonts.yml
+    tags:
+      - fonts
+  - include_tasks: tasks/vim.yml
+  - include_tasks: tasks/zsh.yml
+  - include_tasks: tasks/python.yml
+    tags:
+      - python
+  - include_tasks: tasks/alternatives.yml
+  - include_tasks: tasks/molecule.yml
+    tags:
+      - ansible
+  - include_tasks: tasks/mkdocs.yml
+    tags:
+      - mkdocs
+
+  roles:
+    - role: geerlingguy.docker
+      tags:
+        - docker
+    - role: geerlingguy.nodejs
+      tags: 
+        - nodejs
+    - role: ar_github_hub
+    - role: gantsign.visual-studio-code
+      users:
+        - username: manu
+          visual_studio_code_extensions: "{{ vscode.extensions }}"
+
+    - role: ar_k8s_utils
+      module_defaults:
+        unarchive:
+          owner: root
+          group: root
+          mode: 0755
+      tags:
+        - k8s

@@ -9,21 +9,23 @@
 #   - A hostname/ip can be a member of multiple groups
 
 # Ex 1: Ungrouped hosts, specify before any group headers.
-# [all:vars]
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3.7
+
 # ansible_user='root'              # Username for ssh connection
 # ansible_become='yes'             # Run commands as root user?
 # ansible_become_method='sudo'     # How do I become root user? Use sudo.
 # ansible_become_pass='{{ sudo_password }}'
- 
+
 ## my vms/server hosted locally ##
 ## Setup python path on remote server ansible_python_interpreter ##
 ## my vms/servers hosted by AWS (EC2/Lightsail) ##
-# [localhost]
-# 127.0.0.1 ansible_python_interpreter='/usr/bin/python3'
-# 
-# [localhost:vars]
-# ansible_connection=local
-# 
+[localhost]
+127.0.0.1
+
+[localhost:vars]
+ansible_connection=local
+#
 # [lanhosts]
 # raspberry ansible_python_interpreter='/usr/bin/python3' ansible_architecture='arm'
 
@@ -46,7 +48,7 @@
 # Ex 3: A collection of database servers in the 'dbservers' group
 
 ## [dbservers]
-## 
+##
 ## db01.intranet.mydomain.net
 ## db02.intranet.mydomain.net
 ## 10.25.1.56

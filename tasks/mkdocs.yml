@@ -1,0 +1,47 @@
+---
+- name: mkdocs in venv
+  pip:
+    name:
+      - mkdocs
+      - mkdocs-gitbook
+      - mkdocs-material
+      - pymdown-extensions
+      - mkdocs-exclude
+    virtualenv: /opt/venvs/mkdocs
+    state: forcereinstall
+  register: virtualenv_presence
+  ignore_errors: True
+  tags:
+    - mkdocs
+
+- name: Install virtualenv if failed
+  apt:
+    name: virtualenv
+    state: present
+  when: virtualenv_presence is failed
+  tags:
+    - mkdocs
+
+- name: mkdocs in venv
+  pip:
+    name:
+      - mkdocs
+      - mkdocs-gitbook
+      - mkdocs-material
+      - pymdown-extensions
+    virtualenv: /opt/venvs/mkdocs
+    state: present
+  when: virtualenv_presence is failed
+  tags:
+    - mkdocs
+
+- name: Create link to mkdocs
+  file:
+    src: /opt/venvs/mkdocs/bin/mkdocs
+    dest: /usr/bin/mkdocs
+    owner: root
+    group: root
+    state: link
+  tags:
+    - mkdocs
+...
