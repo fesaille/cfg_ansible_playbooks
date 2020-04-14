@@ -4,11 +4,12 @@
     name:
       - molecule
       - ansible-lint
+      - 'molecule[lint]'
       - 'molecule[docker]'
     virtualenv: /opt/venvs/molecule
-    state: present
+    state: forcereinstall 
   register: virtualenv_presence
-#  ignore_errors: True
+    #  ignore_errors: True
   tags:
     - ansible
 

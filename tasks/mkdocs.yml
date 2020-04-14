@@ -3,8 +3,12 @@
   pip:
     name:
       - mkdocs
+      - markdown
       - mkdocs-gitbook
       - mkdocs-material
+      - mkdocs-material-extensions
+      - mknotebooks
+      - mkdocs-awesome-pages-plugin
       - pymdown-extensions
       - mkdocs-exclude
     virtualenv: /opt/venvs/mkdocs
